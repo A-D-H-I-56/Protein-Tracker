@@ -1,0 +1,201 @@
+#,Age,Gender,Weight (kg),Height (cm),Activity Level,Goal,Calories (kcal),Protein (g),Carbs (g),Fat (g)
+1,25,Male,70,175,Very Active,Muscle Gain,"2,950",140,369,82
+2,30,Female,65,165,Sedentary,Weight Loss,"1,650",104,144,58
+3,45,Male,85,180,Active,Maintenance,"2,650",128,331,74
+4,28,Female,58,162,Light Active,Muscle Gain,"2,200",93,247,61
+5,35,Male,95,185,Very Active,Weight Loss,"2,950",171,332,82
+6,52,Female,72,170,Sedentary,Maintenance,"1,850",86,208,64
+7,23,Male,68,178,Active,Muscle Gain,"2,850",122,356,79
+8,41,Female,63,163,Light Active,Weight Loss,"1,750",95,175,58
+9,38,Male,82,176,Active,Maintenance,"2,650",123,331,74
+10,29,Female,67,169,Very Active,Muscle Gain,"2,500",107,300,69
+11,48,Male,88,179,Sedentary,Weight Loss,"2,150",132,215,72
+12,31,Female,71,172,Active,Maintenance,"2,300",106,263,64
+13,26,Male,74,174,Very Active,Muscle Gain,"3,050",133,381,85
+14,44,Female,69,167,Light Active,Weight Loss,"1,800",104,180,60
+15,33,Male,79,177,Active,Maintenance,"2,700",119,338,75
+16,27,Female,61,164,Very Active,Muscle Gain,"2,400",98,288,67
+17,50,Male,92,182,Sedentary,Weight Loss,"2,200",138,220,73
+18,36,Female,66,168,Active,Maintenance,"2,200",99,250,61
+19,24,Male,72,173,Very Active,Muscle Gain,"2,900",130,350,81
+20,42,Female,64,166,Light Active,Weight Loss,"1,700",96,170,57
+21,47,Male,87,181,Active,Maintenance,"2,750",131,344,76
+22,32,Female,59,161,Sedentary,Muscle Gain,"2,000",95,225,56
+23,39,Male,81,178,Very Active,Weight Loss,"2,800",146,325,78
+24,53,Female,75,171,Light Active,Maintenance,"2,000",105,225,56
+25,22,Male,69,172,Active,Muscle Gain,"2,750",124,331,76
+26,37,Female,62,165,Sedentary,Weight Loss,"1,600",99,150,53
+27,43,Male,89,183,Very Active,Maintenance,"3,100",160,388,86
+28,34,Female,68,170,Light Active,Muscle Gain,"2,300",108,263,64
+29,49,Male,84,177,Active,Weight Loss,"2,450",151,281,68
+30,26,Female,57,159,Sedentary,Maintenance,"1,700",80,188,53
+31,31,Male,76,175,Very Active,Muscle Gain,"2,950",137,356,82
+32,46,Female,73,169,Light Active,Weight Loss,"1,850",117,181,51
+33,28,Male,83,180,Active,Maintenance,"2,800",133,350,78
+34,40,Female,65,166,Sedentary,Muscle Gain,"2,100",104,225,58
+35,55,Male,91,179,Very Active,Weight Loss,"2,900",164,325,81
+36,33,Female,70,173,Light Active,Maintenance,"2,100",98,238,58
+37,24,Male,71,174,Active,Muscle Gain,"2,800",128,338,78
+38,51,Female,77,175,Sedentary,Weight Loss,"1,900",123,188,53
+39,29,Male,86,182,Very Active,Maintenance,"3,150",155,394,88
+40,38,Female,60,162,Light Active,Muscle Gain,"2,200",96,263,61
+41,45,Male,78,176,Active,Weight Loss,"2,350",140,263,65
+42,27,Female,55,158,Sedentary,Maintenance,"1,600",77,175,44
+43,35,Male,90,184,Very Active,Muscle Gain,"3,200",162,400,89
+44,56,Female,74,172,Light Active,Weight Loss,"1,900",118,188,53
+45,30,Male,75,177,Active,Maintenance,"2,650",120,331,74
+46,42,Female,67,168,Sedentary,Muscle Gain,"2,100",107,225,58
+47,48,Male,93,181,Very Active,Weight Loss,"3,000",167,338,83
+48,25,Female,63,164,Light Active,Maintenance,"2,000",95,225,56
+49,32,Male,80,179,Active,Muscle Gain,"2,900",144,350,81
+50,54,Female,76,174,Sedentary,Weight Loss,"1,800",122,169,50
+51,21,Male,67,171,Very Active,Maintenance,"2,700",121,325,75
+52,39,Female,58,160,Light Active,Muscle Gain,"2,100",92,238,58
+53,44,Male,87,178,Active,Weight Loss,"2,600",156,288,72
+54,31,Female,64,166,Sedentary,Maintenance,"1,750",102,175,49
+55,26,Male,73,173,Very Active,Muscle Gain,"2,850",131,344,79
+56,50,Female,79,176,Light Active,Weight Loss,"1,950",126,194,54
+57,36,Male,82,175,Active,Maintenance,"2,700",131,325,75
+58,23,Female,56,157,Sedentary,Muscle Gain,"1,900",90,213,53
+59,47,Male,94,183,Very Active,Weight Loss,"3,050",169,350,85
+60,34,Female,69,169,Light Active,Maintenance,"2,100",110,225,58
+61,28,Male,77,176,Active,Muscle Gain,"2,850",139,331,79
+62,52,Female,81,177,Sedentary,Weight Loss,"2,000",130,200,56
+63,37,Male,85,180,Very Active,Maintenance,"3,100",153,388,86
+64,29,Female,62,163,Light Active,Muscle Gain,"2,200",100,263,61
+65,43,Male,88,179,Active,Weight Loss,"2,550",158,281,71
+66,25,Female,59,161,Sedentary,Maintenance,"1,650",94,169,46
+67,32,Male,79,177,Very Active,Muscle Gain,"3,000",142,375,83
+68,55,Female,78,175,Light Active,Weight Loss,"2,000",125,200,56
+69,40,Male,83,178,Active,Maintenance,"2,750",133,344,76
+70,27,Female,65,167,Sedentary,Muscle Gain,"2,100",104,225,58
+71,46,Male,96,184,Very Active,Weight Loss,"3,100",173,350,86
+72,33,Female,71,172,Light Active,Maintenance,"2,150",113,238,60
+73,22,Male,70,174,Active,Muscle Gain,"2,800",126,338,78
+74,58,Female,80,178,Sedentary,Weight Loss,"2,050",128,206,57
+75,35,Male,81,176,Very Active,Maintenance,"3,050",146,381,85
+76,30,Female,66,168,Light Active,Muscle Gain,"2,300",106,263,64
+77,49,Male,89,182,Active,Weight Loss,"2,650",160,294,74
+78,24,Female,57,159,Sedentary,Maintenance,"1,650",91,175,46
+79,41,Male,84,177,Very Active,Muscle Gain,"3,100",151,388,86
+80,53,Female,75,173,Light Active,Weight Loss,"1,950",120,194,54
+81,31,Male,76,175,Active,Maintenance,"2,650",121,331,74
+82,26,Female,64,165,Sedentary,Muscle Gain,"2,050",102,225,57
+83,44,Male,90,181,Very Active,Weight Loss,"3,000",162,338,83
+84,38,Female,68,170,Light Active,Maintenance,"2,150",109,238,60
+85,23,Male,72,173,Active,Muscle Gain,"2,800",130,338,78
+86,57,Female,82,179,Sedentary,Weight Loss,"2,100",131,213,58
+87,36,Male,86,180,Very Active,Maintenance,"3,150",155,394,88
+88,29,Female,61,162,Light Active,Muscle Gain,"2,150",98,250,60
+89,48,Male,92,183,Active,Weight Loss,"2,750",165,306,76
+90,34,Female,67,169,Sedentary,Maintenance,"1,800",107,175,50
+91,27,Male,74,174,Very Active,Muscle Gain,"2,900",133,350,81
+92,51,Female,77,174,Light Active,Weight Loss,"2,000",123,200,56
+93,39,Male,83,179,Active,Maintenance,"2,800",133,350,78
+94,25,Female,60,163,Sedentary,Muscle Gain,"2,000",96,225,56
+95,42,Male,95,185,Very Active,Weight Loss,"3,150",171,356,88
+96,32,Female,70,171,Light Active,Maintenance,"2,150",112,238,60
+97,28,Male,78,176,Active,Muscle Gain,"2,900",140,344,81
+98,59,Female,83,180,Sedentary,Weight Loss,"2,150",133,219,60
+99,37,Male,87,181,Very Active,Maintenance,"3,200",157,400,89
+100,30,Female,63,164,Light Active,Muscle Gain,"2,200",101,263,61
+101,45,Male,91,182,Active,Weight Loss,"2,800",164,313,78
+102,24,Female,58,160,Sedentary,Maintenance,"1,650",93,169,46
+103,33,Male,80,178,Very Active,Muscle Gain,"3,050",144,381,85
+104,56,Female,79,176,Light Active,Weight Loss,"2,050",126,206,57
+105,40,Male,84,177,Active,Maintenance,"2,750",134,344,76
+106,26,Female,65,166,Sedentary,Muscle Gain,"2,100",104,225,58
+107,47,Male,93,184,Very Active,Weight Loss,"3,100",167,350,86
+108,35,Female,72,172,Light Active,Maintenance,"2,200",115,238,61
+109,22,Male,71,172,Active,Muscle Gain,"2,750",128,331,76
+110,54,Female,81,178,Sedentary,Weight Loss,"2,100",130,213,58
+111,38,Male,88,180,Very Active,Maintenance,"3,150",158,394,88
+112,31,Female,64,165,Light Active,Muscle Gain,"2,200",102,263,61
+113,49,Male,89,181,Active,Weight Loss,"2,700",160,300,75
+114,27,Female,59,161,Sedentary,Maintenance,"1,700",94,175,47
+115,43,Male,85,179,Very Active,Muscle Gain,"3,100",153,388,86
+116,52,Female,76,173,Light Active,Weight Loss,"2,000",122,200,56
+117,34,Male,82,177,Active,Maintenance,"2,750",131,344,76
+118,29,Female,66,168,Sedentary,Muscle Gain,"2,150",106,238,60
+119,46,Male,94,183,Very Active,Weight Loss,"3,100",169,350,86
+120,36,Female,69,170,Light Active,Maintenance,"2,150",110,238,60
+121,25,Male,75,175,Active,Muscle Gain,"2,850",135,344,79
+122,60,Female,84,181,Sedentary,Weight Loss,"2,200",134,225,61
+123,41,Male,86,180,Very Active,Maintenance,"3,150",155,394,88
+124,28,Female,62,163,Light Active,Muscle Gain,"2,150",99,250,60
+125,50,Male,90,182,Active,Weight Loss,"2,800",162,313,78
+126,32,Female,68,169,Sedentary,Maintenance,"1,800",109,175,50
+127,23,Male,73,174,Very Active,Muscle Gain,"2,900",131,350,81
+128,55,Female,78,175,Light Active,Weight Loss,"2,050",125,206,57
+129,39,Male,83,178,Active,Maintenance,"2,800",133,350,78
+130,26,Female,60,162,Sedentary,Muscle Gain,"2,000",96,225,56
+131,44,Male,96,185,Very Active,Weight Loss,"3,200",173,363,89
+132,35,Female,71,171,Light Active,Maintenance,"2,150",114,238,60
+133,30,Male,77,176,Active,Muscle Gain,"2,900",139,344,81
+134,58,Female,82,179,Sedentary,Weight Loss,"2,150",131,219,60
+135,42,Male,87,181,Very Active,Maintenance,"3,200",157,400,89
+136,27,Female,63,164,Light Active,Muscle Gain,"2,200",101,263,61
+137,48,Male,91,182,Active,Weight Loss,"2,800",164,313,78
+138,33,Female,67,168,Sedentary,Maintenance,"1,800",107,175,50
+139,24,Male,72,173,Very Active,Muscle Gain,"2,850",130,344,79
+140,53,Female,79,176,Light Active,Weight Loss,"2,050",126,206,57
+141,37,Male,84,178,Active,Maintenance,"2,750",134,344,76
+142,29,Female,65,166,Sedentary,Muscle Gain,"2,100",104,225,58
+143,51,Male,93,183,Very Active,Weight Loss,"3,150",167,356,88
+144,34,Female,70,170,Light Active,Maintenance,"2,150",112,238,60
+145,25,Male,76,175,Active,Muscle Gain,"2,850",137,338,79
+146,47,Female,80,177,Sedentary,Weight Loss,"2,150",128,219,60
+147,40,Male,88,180,Very Active,Maintenance,"3,150",158,394,88
+148,31,Female,64,165,Light Active,Muscle Gain,"2,200",102,263,61
+149,45,Male,89,181,Active,Weight Loss,"2,700",160,300,75
+150,28,Female,61,162,Sedentary,Maintenance,"1,700",98,175,47
+151,36,Male,85,179,Very Active,Muscle Gain,"3,100",153,388,86
+152,49,Female,77,174,Light Active,Weight Loss,"2,000",123,200,56
+153,32,Male,81,177,Active,Maintenance,"2,750",131,344,76
+154,26,Female,66,167,Sedentary,Muscle Gain,"2,150",106,238,60
+155,54,Male,92,182,Very Active,Weight Loss,"3,100",166,350,86
+156,38,Female,69,169,Light Active,Maintenance,"2,150",110,238,60
+157,23,Male,74,174,Active,Muscle Gain,"2,800",133,338,78
+158,57,Female,83,180,Sedentary,Weight Loss,"2,200",133,225,61
+159,41,Male,86,180,Very Active,Maintenance,"3,150",155,394,88
+160,30,Female,67,168,Light Active,Muscle Gain,"2,300",107,263,64
+161,46,Male,90,181,Active,Weight Loss,"2,800",162,313,78
+162,27,Female,62,163,Sedentary,Maintenance,"1,750",99,175,49
+163,35,Male,79,176,Very Active,Muscle Gain,"3,000",142,375,83
+164,52,Female,75,172,Light Active,Weight Loss,"2,000",120,200,56
+165,39,Male,83,178,Active,Maintenance,"2,800",133,350,78
+166,24,Female,59,160,Sedentary,Muscle Gain,"2,000",95,225,56
+167,43,Male,95,184,Very Active,Weight Loss,"3,200",171,363,89
+168,33,Female,71,171,Light Active,Maintenance,"2,150",114,238,60
+169,28,Male,78,176,Active,Muscle Gain,"2,900",140,344,81
+170,56,Female,80,178,Sedentary,Weight Loss,"2,150",128,219,60
+171,42,Male,87,181,Very Active,Maintenance,"3,200",157,400,89
+172,29,Female,64,165,Light Active,Muscle Gain,"2,200",102,263,61
+173,47,Male,89,182,Active,Weight Loss,"2,700",160,300,75
+174,34,Female,68,169,Sedentary,Maintenance,"1,800",109,175,50
+175,25,Male,73,173,Very Active,Muscle Gain,"2,900",131,350,81
+176,53,Female,76,173,Light Active,Weight Loss,"2,000",122,200,56
+177,40,Male,84,177,Active,Maintenance,"2,750",134,344,76
+178,31,Female,65,166,Sedentary,Muscle Gain,"2,100",104,225,58
+179,48,Male,91,183,Very Active,Weight Loss,"3,100",164,350,86
+180,36,Female,70,170,Light Active,Maintenance,"2,150",112,238,60
+181,22,Male,69,171,Active,Muscle Gain,"2,700",124,325,75
+182,59,Female,82,179,Sedentary,Weight Loss,"2,150",131,219,60
+183,44,Male,88,180,Very Active,Maintenance,"3,150",158,394,88
+184,30,Female,63,164,Light Active,Muscle Gain,"2,200",101,263,61
+185,45,Male,86,179,Active,Weight Loss,"2,600",155,288,72
+186,26,Female,60,162,Sedentary,Maintenance,"1,650",96,169,46
+187,37,Male,82,177,Very Active,Muscle Gain,"3,050",148,381,85
+188,50,Female,78,175,Light Active,Weight Loss,"2,050",125,206,57
+189,32,Male,80,178,Active,Maintenance,"2,750",128,344,76
+190,27,Female,67,168,Sedentary,Muscle Gain,"2,150",107,238,60
+191,55,Male,93,182,Very Active,Weight Loss,"3,150",167,356,88
+192,38,Female,72,172,Light Active,Maintenance,"2,200",115,238,61
+193,23,Male,71,172,Active,Muscle Gain,"2,750",128,331,76
+194,51,Female,79,176,Sedentary,Weight Loss,"2,100",126,213,58
+195,41,Male,85,180,Very Active,Maintenance,"3,100",153,388,86
+196,28,Female,62,163,Light Active,Muscle Gain,"2,150",99,250,60
+197,46,Male,90,181,Active,Weight Loss,"2,800",162,313,78
+198,33,Female,69,170,Sedentary,Maintenance,"1,800",110,175,50
+199,24,Male,75,175,Very Active,Muscle Gain,"2,950",135,369,82
+200,49,Female,74,172,Light Active,Weight Loss,"2,000",118,200,56
