@@ -1,41 +1,45 @@
+import os
 from typing import Literal
 from pydantic import BaseModel, Field, field_validator
+from app.config import Config
 
 class UserProfile(BaseModel):
     """
     Domain Entity and Validation Schema for User Biometric and Fitness Profile.
-    Strictly follows Single Responsibility Principle.
+    Boundaries and limits are dynamically sourced from configuration / environment variables.
     """
-    age: int = Field(..., ge=15, le=100, description="Age in years (15-100)")
-    gender: Literal['Male', 'Female'] = Field(..., description="Biological sex for metabolic baseline")
-    weight: float = Field(..., ge=40.0, le=200.0, description="Body weight in kilograms (40-200 kg)")
-    height: float = Field(..., ge=140.0, le=220.0, description="Body height in centimeters (140-220 cm)")
-    activity_level: Literal['Sedentary', 'Light Active', 'Active', 'Very Active'] = Field(
-        ..., description="Daily physical activity level"
-    )
-    goal: Literal['Weight Loss', 'Maintenance', 'Muscle Gain'] = Field(
-        ..., description="Primary fitness objective"
-    )
+    age: int = Field(..., ge=Config.MIN_AGE, le=Config.MAX_AGE, description="Age in years")
+    gender: str = Field(..., description="Biological sex for metabolic baseline")
+    weight: float = Field(..., ge=Config.MIN_WEIGHT, le=Config.MAX_WEIGHT, description="Body weight in kilograms")
+    height: float = Field(..., ge=Config.MIN_HEIGHT, le=Config.MAX_HEIGHT, description="Body height in centimeters")
+    activity_level: str = Field(..., description="Daily physical activity level")
+    goal: str = Field(..., description="Primary fitness objective")
 
-    @field_validator('gender', mode='before')
+    @field_validator('gender')
     @classmethod
-    def sanitize_gender(cls, v):
+    def validate_gender(cls, v):
         if isinstance(v, str):
             v = v.strip().title()
+        if v not in Config.ALLOWED_GENDERS:
+            raise ValueError(f"Gender must be one of {Config.ALLOWED_GENDERS}, got '{v}'")
         return v
 
-    @field_validator('activity_level', mode='before')
+    @field_validator('activity_level')
     @classmethod
-    def sanitize_activity_level(cls, v):
+    def validate_activity_level(cls, v):
         if isinstance(v, str):
             v = v.strip().title()
+        if v not in Config.ALLOWED_ACTIVITY_LEVELS:
+            raise ValueError(f"Activity level must be one of {Config.ALLOWED_ACTIVITY_LEVELS}, got '{v}'")
         return v
 
-    @field_validator('goal', mode='before')
+    @field_validator('goal')
     @classmethod
-    def sanitize_goal(cls, v):
+    def validate_goal(cls, v):
         if isinstance(v, str):
             v = v.strip().title()
+        if v not in Config.ALLOWED_GOALS:
+            raise ValueError(f"Goal must be one of {Config.ALLOWED_GOALS}, got '{v}'")
         return v
 
     @property

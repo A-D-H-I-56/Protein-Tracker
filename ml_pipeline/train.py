@@ -1,11 +1,15 @@
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Add project root to sys.path
 BASE_DIR = Path(__file__).resolve().parent.parent
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
+
+# Load .env
+load_dotenv(dotenv_path=BASE_DIR / '.env', override=False)
 
 import json
 import logging
@@ -17,14 +21,32 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from ml_pipeline.preprocess import load_and_clean_data, prepare_features
+from app.config import Config
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
-def train_pipeline(data_path: str = "Fitness_data.csv", artifacts_dir: str = "artifacts"):
+def train_pipeline(
+    data_path: str = None,
+    artifacts_dir: str = None,
+    k_neighbors: int = None,
+    metric: str = None,
+    weights: str = None,
+    train_split_ratio: float = None,
+    random_state: int = None
+):
     """
     Automated training pipeline for the Fitness Nutrition k-NN regression model.
+    Sourced from environment configuration (.env).
     """
+    data_path = data_path or Config.DATASET_PATH
+    artifacts_dir = artifacts_dir or Config.ARTIFACTS_DIR
+    k_neighbors = k_neighbors or Config.KNN_NEIGHBORS
+    metric = metric or Config.KNN_METRIC
+    weights = weights or Config.KNN_WEIGHTS
+    train_split_ratio = train_split_ratio or Config.TRAIN_SPLIT_RATIO
+    random_state = random_state or Config.RANDOM_STATE
+
     artifacts_path = Path(artifacts_dir)
     artifacts_path.mkdir(parents=True, exist_ok=True)
 
@@ -36,12 +58,12 @@ def train_pipeline(data_path: str = "Fitness_data.csv", artifacts_dir: str = "ar
     feature_names = list(X.columns)
     target_names = list(y.columns)
 
-    # Train/Test Split (120 train, 80 test for 200 rows)
-    train_size = min(120, int(len(df) * 0.6))
+    # Train/Test Split configured from environment
+    train_size = int(len(df) * train_split_ratio)
     test_size = len(df) - train_size
     
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, train_size=train_size, random_state=42
+        X, y, test_size=test_size, train_size=train_size, random_state=random_state
     )
 
     logger.info(f"Data Split: {len(X_train)} train samples, {len(X_test)} test samples.")
@@ -51,9 +73,9 @@ def train_pipeline(data_path: str = "Fitness_data.csv", artifacts_dir: str = "ar
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    # Model Fitting
-    logger.info("Training KNeighborsRegressor (k=5, metric=euclidean)...")
-    model = KNeighborsRegressor(n_neighbors=5, metric='euclidean', weights='distance')
+    # Model Fitting with environment parameters
+    logger.info(f"Training KNeighborsRegressor (k={k_neighbors}, metric={metric}, weights={weights})...")
+    model = KNeighborsRegressor(n_neighbors=k_neighbors, metric=metric, weights=weights)
     model.fit(X_train_scaled, y_train)
 
     # Evaluation

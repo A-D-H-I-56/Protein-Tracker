@@ -6,6 +6,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from app.models.nutrition_plan import SimilarProfile
+from app.config import Config
 
 logger = logging.getLogger(__name__)
 
@@ -102,10 +103,10 @@ class MLEngine:
         _, scaled_input = self.transform_features(profile_dict)
         raw_pred = self.model.predict(scaled_input)[0]
 
-        calories = max(800, min(6000, int(round(raw_pred[0]))))
-        protein = max(30, min(400, int(round(raw_pred[1]))))
-        carbs = max(20, min(800, int(round(raw_pred[2]))))
-        fat = max(15, min(300, int(round(raw_pred[3]))))
+        calories = max(Config.MIN_CALORIES, min(Config.MAX_CALORIES, int(round(raw_pred[0]))))
+        protein = max(Config.MIN_PROTEIN, min(Config.MAX_PROTEIN, int(round(raw_pred[1]))))
+        carbs = max(Config.MIN_CARBS, min(Config.MAX_CARBS, int(round(raw_pred[2]))))
+        fat = max(Config.MIN_FAT, min(Config.MAX_FAT, int(round(raw_pred[3]))))
 
         return {
             'calories': calories,
