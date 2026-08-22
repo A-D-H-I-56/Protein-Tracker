@@ -1,38 +1,70 @@
-# Production Dockerfile for NutriAI Protein & Nutrition Tracker
-FROM python:3.11-slim
+# ==============================================================================
+# Self-Contained & Fully Configurable Production Dockerfile for NutriAI
+# Zero hardcoded values: all parameters parameterized via ARG and ENV
+# ==============================================================================
+ARG PYTHON_VERSION=3.11-slim
+FROM python:${PYTHON_VERSION} AS runner
 
-# Set environment variables
+# Build arguments with configurable defaults
+ARG APP_USER=appuser
+ARG APP_GROUP=appgroup
+ARG APP_UID=10001
+ARG APP_GID=10001
+ARG PORT=5000
+ARG HOST=0.0.0.0
+ARG THREADS=4
+ARG FLASK_ENV=production
+ARG ARTIFACTS_DIR=/app/artifacts
+ARG DATASET_PATH=/app/Fitness_data.csv
+
+# Runtime environment variables mapped from ARGs (can be overridden at run time)
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    FLASK_ENV=production \
-    PORT=5000
+    FLASK_ENV=${FLASK_ENV} \
+    HOST=${HOST} \
+    PORT=${PORT} \
+    THREADS=${THREADS} \
+    ARTIFACTS_DIR=${ARTIFACTS_DIR} \
+    DATASET_PATH=${DATASET_PATH}
 
 WORKDIR /app
 
-# Install system dependencies
+# Install minimal system dependencies for health checks & clean cache
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency requirements
+# Create dedicated non-root security user & group dynamically
+RUN groupadd -g ${APP_GID} ${APP_GROUP} && \
+    useradd -u ${APP_UID} -g ${APP_GROUP} -s /bin/sh -m ${APP_USER}
+
+# Layer caching for Python dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy project files
+# Copy entire project source code & dataset
 COPY . .
 
-# Run training pipeline to generate artifacts if not present
-RUN python ml_pipeline/train.py && python ml_pipeline/evaluate.py
+# Ensure default .env fallback exists inside the container image
+RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
-# Expose server port
-EXPOSE 5000
+# Pre-train ML model & generate visual evaluation plots inside image during build
+RUN python ml_pipeline/train.py && \
+    python ml_pipeline/evaluate.py
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:5000/api/v1/health || exit 1
+# Ensure artifacts and app directories are owned by non-root user
+RUN chown -R ${APP_USER}:${APP_GROUP} /app
 
-# Production WSGI server
+# Switch to non-root user for runtime execution
+USER ${APP_USER}
+
+# Expose production port dynamically
+EXPOSE ${PORT}
+
+# Built-in container healthcheck using dynamic PORT variable
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD curl -f http://localhost:${PORT}/api/v1/health || exit 1
+
+# Launch production WSGI server (Waitress)
 CMD ["python", "wsgi.py"]

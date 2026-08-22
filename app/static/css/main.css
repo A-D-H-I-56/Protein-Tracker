@@ -89,9 +89,9 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: relative;
+  gap: 1.5rem;
 }
 
 .nav-brand {
@@ -103,6 +103,7 @@ body {
   font-weight: 800;
   font-size: 1.3rem;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
 .nav-brand .brand-badge {
@@ -116,10 +117,17 @@ body {
   letter-spacing: 0.04em;
 }
 
+.nav-menu {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .theme-toggle-btn {
@@ -714,6 +722,14 @@ footer {
 @media (max-width: 768px) {
   .navbar {
     padding: 0.75rem 1rem;
+  }
+
+  .nav-container {
+    justify-content: space-between;
+  }
+
+  .nav-actions {
+    margin-left: auto;
   }
 
   .mobile-menu-btn {

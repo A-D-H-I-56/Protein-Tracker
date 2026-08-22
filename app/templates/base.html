@@ -27,7 +27,16 @@
         <span class="brand-badge">ML Core v1.0</span>
       </a>
 
-      <!-- Right controls (Theme Toggle + Hamburger Menu Button) -->
+      <!-- Navigation Links (Desktop & Collapsible Mobile Menu) -->
+      <nav id="navMenu" class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('web.index') }}" class="nav-link {% if request.endpoint == 'web.index' %}active{% endif %}">Calculator</a></li>
+          <li><a href="{{ url_for('web.metrics') }}" class="nav-link {% if request.endpoint == 'web.metrics' %}active{% endif %}">Model Performance</a></li>
+          <li><a href="{{ url_for('web.api_docs') }}" class="nav-link {% if request.endpoint == 'web.api_docs' %}active{% endif %}">API Docs</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right-most controls (Theme Toggle + Hamburger Menu Button) -->
       <div class="nav-actions">
         <button id="themeToggle" class="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
           ☀️
@@ -39,15 +48,6 @@
           <span class="hamburger-bar"></span>
         </button>
       </div>
-
-      <!-- Navigation Links (Desktop & Collapsible Mobile Menu) -->
-      <nav id="navMenu" class="nav-menu">
-        <ul class="nav-links">
-          <li><a href="{{ url_for('web.index') }}" class="nav-link {% if request.endpoint == 'web.index' %}active{% endif %}">Calculator</a></li>
-          <li><a href="{{ url_for('web.metrics') }}" class="nav-link {% if request.endpoint == 'web.metrics' %}active{% endif %}">Model Performance</a></li>
-          <li><a href="{{ url_for('web.api_docs') }}" class="nav-link {% if request.endpoint == 'web.api_docs' %}active{% endif %}">API Docs</a></li>
-        </ul>
-      </nav>
     </div>
   </header>
 
