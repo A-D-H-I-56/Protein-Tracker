@@ -1,5 +1,6 @@
-// Theme Toggle Logic
+// Theme & Navigation Logic
 document.addEventListener('DOMContentLoaded', () => {
+  // Theme Toggle
   const themeToggle = document.getElementById('themeToggle');
   const savedTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
@@ -18,6 +19,49 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateThemeIcon(theme) {
     if (!themeToggle) return;
     themeToggle.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  // Mobile Navigation Hamburger Toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navMenu = document.getElementById('navMenu');
+
+  if (mobileMenuBtn && navMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+      mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenuBtn.classList.toggle('open');
+      navMenu.classList.toggle('open');
+    });
+
+    // Close menu when clicking outside or clicking any nav link
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+        mobileMenuBtn.classList.remove('open');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        mobileMenuBtn.classList.remove('open');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Form Submit Loading Feedback
+  const calcForm = document.querySelector('form[action*="calculate"]');
+  if (calcForm) {
+    calcForm.addEventListener('submit', (e) => {
+      const submitBtn = calcForm.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.innerHTML = '<span>⏳ Computing AI Recommendation...</span>';
+        submitBtn.style.opacity = '0.85';
+        submitBtn.style.pointerEvents = 'none';
+      }
+    });
   }
 
   // Live Biometric Calculator
@@ -46,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (age > 0) {
         let bmr = (10 * weight) + (6.25 * height) - (5 * age);
         bmr = gender === 'Male' ? bmr + 5 : bmr - 161;
-        if (bmrEl) bmrEl.innerText = Math.round(bmr) + ' kcal';
+        if (bmrEl) bmrEl.innerText = Math.round(bmr).toLocaleString() + ' kcal';
 
         const multipliers = {
           'Sedentary': 1.2,
@@ -56,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const mult = multipliers[activity] || 1.2;
         const tdee = Math.round(bmr * mult);
-        if (tdeeEl) tdeeEl.innerText = tdee + ' kcal';
+        if (tdeeEl) tdeeEl.innerText = Math.round(tdee).toLocaleString() + ' kcal';
       }
     }
   }
@@ -93,6 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Initial calculation
+  // Initial calculation on page load
   updateLiveBioMetrics();
 });

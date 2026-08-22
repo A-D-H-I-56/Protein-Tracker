@@ -34,7 +34,7 @@
     <h2 class="card-title">User Biometric Baseline</h2>
     <span style="font-size: 0.85rem; color: var(--text-muted);">Mifflin-St Jeor + WHO Categorization</span>
   </div>
-  <div class="form-grid" style="grid-template-columns: repeat(6, 1fr); gap: 1rem;">
+  <div class="profile-baseline-grid">
     <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
       <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Age & Sex</div>
       <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-top: 0.2rem;">{{ profile.age }}y / {{ profile.gender }}</div>
@@ -111,13 +111,13 @@
 <div class="charts-grid">
   <div class="chart-card glass">
     <h3 style="font-size: 1.1rem; color: var(--text-heading); margin-bottom: 1rem;">Macronutrient Energy Contribution</h3>
-    <div style="position: relative; height: 250px;">
+    <div class="chart-wrapper">
       <canvas id="macroDoughnutChart"></canvas>
     </div>
   </div>
   <div class="chart-card glass">
     <h3 style="font-size: 1.1rem; color: var(--text-heading); margin-bottom: 1rem;">Energy Expenditure & AI Caloric Target</h3>
-    <div style="position: relative; height: 250px;">
+    <div class="chart-wrapper">
       <canvas id="energyComparisonChart"></canvas>
     </div>
   </div>
@@ -159,7 +159,7 @@
   <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
     The k-NN regressor determined your optimal macros by identifying the closest matching real-world athletes and fitness participants from the ground-truth dataset:
   </p>
-  <div style="overflow-x: auto;">
+  <div class="table-responsive">
     <table class="neighbor-table">
       <thead>
         <tr>
