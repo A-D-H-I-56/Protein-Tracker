@@ -1,11 +1,15 @@
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Add project root to sys.path
 BASE_DIR = Path(__file__).resolve().parent.parent
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
+
+# Load .env
+load_dotenv(dotenv_path=BASE_DIR / '.env', override=False)
 
 import joblib
 import numpy as np
@@ -15,19 +19,18 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from app.config import Config
 
-def generate_evaluation_visualizations(artifacts_dir: str = "artifacts", output_dirs: list = None):
+def generate_evaluation_visualizations(artifacts_dir: str = None, output_dirs: list = None):
     """
     Generates high-res visual performance plots from persisted test evaluations.
     """
+    artifacts_dir = artifacts_dir or Config.ARTIFACTS_DIR
     artifacts_path = Path(artifacts_dir)
     test_sets_path = artifacts_path / 'test_sets.pkl'
 
     if not test_sets_path.exists():
-        test_sets_path = Path('test_sets.pkl')
-
-    if not test_sets_path.exists():
-        print("Test sets not found. Run training pipeline first.")
+        print(f"Test sets not found at {test_sets_path}. Run training pipeline first.")
         return
 
     data = joblib.load(test_sets_path)
@@ -36,7 +39,7 @@ def generate_evaluation_visualizations(artifacts_dir: str = "artifacts", output_
     target_names = data['target_names']
 
     if output_dirs is None:
-        output_dirs = [Path("app/static/images")]
+        output_dirs = [Path(Config.STATIC_FOLDER) / "images"]
 
     for out_dir in output_dirs:
         out_dir.mkdir(parents=True, exist_ok=True)

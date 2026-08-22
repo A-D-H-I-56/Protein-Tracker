@@ -1,17 +1,30 @@
+import json
 from flask import Blueprint, request, jsonify, current_app
 from pydantic import ValidationError
 from app.models.user_profile import UserProfile
 from app.services.nutrition_service import NutritionService
 from app.services.ml_service import MLService
+from app.config import Config
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 
 def get_services():
-    artifacts_dir = current_app.config['ARTIFACTS_DIR']
-    dataset_path = current_app.config['DATASET_PATH']
+    artifacts_dir = current_app.config.get('ARTIFACTS_DIR', Config.ARTIFACTS_DIR)
+    dataset_path = current_app.config.get('DATASET_PATH', Config.DATASET_PATH)
     ml_service = MLService(artifacts_dir=artifacts_dir, dataset_path=dataset_path)
     nutrition_service = NutritionService(ml_service=ml_service)
     return ml_service, nutrition_service
+
+def format_validation_errors(ve: ValidationError):
+    """Format Pydantic validation errors into clean, JSON-serializable dictionaries."""
+    errors = []
+    for err in ve.errors():
+        errors.append({
+            "field": ".".join(str(loc) for loc in err.get("loc", [])),
+            "message": err.get("msg", ""),
+            "type": err.get("type", "")
+        })
+    return errors
 
 @api_bp.route('/health', methods=['GET'])
 def health():
@@ -67,7 +80,7 @@ def predict():
         return jsonify({
             "success": False,
             "error": "Validation Error",
-            "details": ve.errors()
+            "details": format_validation_errors(ve)
         }), 422
     except Exception as e:
         current_app.logger.error(f"API prediction error: {e}", exc_info=True)
@@ -96,7 +109,7 @@ def explain():
     try:
         data = request.get_json()
         profile = UserProfile(**data)
-        k = int(request.args.get('k', 3))
+        k = int(request.args.get('k', Config.TOP_K_EXPLAIN_DEFAULT))
         k = max(1, min(10, k))
 
         similar = ml_service.find_similar_profiles(profile.model_dump(), k=k)
@@ -106,6 +119,10 @@ def explain():
             "similar_profiles": [p.model_dump() for p in similar]
         }), 200
     except ValidationError as ve:
-        return jsonify({"success": False, "error": "Validation Error", "details": ve.errors()}), 422
+        return jsonify({
+            "success": False,
+            "error": "Validation Error",
+            "details": format_validation_errors(ve)
+        }), 422
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500

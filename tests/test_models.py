@@ -78,3 +78,12 @@ def test_nutrition_plan_macro_ratios():
     assert plan.protein_ratio == 30
     assert plan.carbs_ratio == 40
     assert plan.fat_ratio == 30
+
+def test_config_defaults():
+    from app.config import Config
+    assert Config.PORT == 5000
+    assert Config.KNN_NEIGHBORS == 5
+    assert Config.KNN_METRIC == 'euclidean'
+    assert 'Male' in Config.ALLOWED_GENDERS
+    assert 'Muscle Gain' in Config.ALLOWED_GOALS
+

@@ -1,24 +1,21 @@
 from typing import List
 from app.models.nutrition_plan import MealCategory
+from app.config import Config
 
 class MealPlannerService:
     """
     Business Logic Service for generating targeted meal breakdowns and food suggestions.
-    Follows Single Responsibility Principle.
+    Follows Single Responsibility Principle and uses environment-configured ratios.
     """
     @staticmethod
     def generate_meal_breakdown(calories: int, protein: int, carbs: int, fat: int, goal: str) -> List[MealCategory]:
         """
-        Divides daily nutrition targets into 4 structured meals:
-        - Breakfast: 25%
-        - Lunch: 35%
-        - Dinner: 25%
-        - Snacks & Workout Fuel: 15%
+        Divides daily nutrition targets into 4 structured meals dynamically sourced from Config.
         """
         distribution = [
             {
                 "name": "Breakfast",
-                "pct": 0.25,
+                "pct": Config.MEAL_BREAKFAST_PCT,
                 "suggestions": [
                     "Eggs/Egg Whites with whole-grain oats & berries",
                     "Greek yogurt parfait with chia seeds & almond butter",
@@ -27,7 +24,7 @@ class MealPlannerService:
             },
             {
                 "name": "Lunch",
-                "pct": 0.35,
+                "pct": Config.MEAL_LUNCH_PCT,
                 "suggestions": [
                     "Grilled chicken breast with brown rice & broccoli",
                     "Salmon fillet with sweet potato & asparagus",
@@ -36,7 +33,7 @@ class MealPlannerService:
             },
             {
                 "name": "Dinner",
-                "pct": 0.25,
+                "pct": Config.MEAL_DINNER_PCT,
                 "suggestions": [
                     "Lean beef or turkey stir-fry with zucchini & bell peppers",
                     "White fish / Cod with roasted baby potatoes & greens",
@@ -45,7 +42,7 @@ class MealPlannerService:
             },
             {
                 "name": "Snacks & Pre/Post Workout",
-                "pct": 0.15,
+                "pct": Config.MEAL_SNACKS_PCT,
                 "suggestions": [
                     "Cottage cheese with walnuts or rice cakes",
                     "Protein shake with an apple or rice cakes",
@@ -59,7 +56,7 @@ class MealPlannerService:
             pct = meal["pct"]
             meals.append(MealCategory(
                 name=meal["name"],
-                percentage=int(pct * 100),
+                percentage=int(round(pct * 100)),
                 calories=int(round(calories * pct)),
                 protein=int(round(protein * pct)),
                 carbs=int(round(carbs * pct)),
