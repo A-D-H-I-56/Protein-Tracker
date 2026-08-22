@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}ML Model Performance & Evaluation | NutriAI{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1 class="hero-title">Model Performance & Evaluation</h1>
+  <p class="hero-subtitle">
+    Quantitative regression benchmarks and error distribution metrics across all 4 multi-output target variables.
+  </p>
+</div>
+
+<!-- Architecture & Dataset Stats -->
+<div class="macro-cards-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 2rem;">
+  <div class="macro-card glass" style="padding: 1.25rem;">
+    <div class="macro-label">Model Architecture</div>
+    <div style="font-size: 1.2rem; font-weight: 700; color: var(--text-heading); margin: 0.5rem 0;">k-NN Regressor</div>
+    <div style="font-size: 0.8rem; color: var(--text-muted);">k=5 &bull; Euclidean Distance</div>
+  </div>
+  <div class="macro-card glass" style="padding: 1.25rem;">
+    <div class="macro-label">Total Verified Dataset</div>
+    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 0.5rem 0;">{{ metrics.dataset_total_samples }}</div>
+    <div style="font-size: 0.8rem; color: var(--text-muted);">Biometric fitness profiles</div>
+  </div>
+  <div class="macro-card glass" style="padding: 1.25rem;">
+    <div class="macro-label">Training Partition</div>
+    <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin: 0.5rem 0;">{{ metrics.train_samples }}</div>
+    <div style="font-size: 0.8rem; color: var(--text-muted);">60% Split (Random State: 42)</div>
+  </div>
+  <div class="macro-card glass" style="padding: 1.25rem;">
+    <div class="macro-label">Testing Partition</div>
+    <div style="font-size: 1.5rem; font-weight: 700; color: var(--warning); margin: 0.5rem 0;">{{ metrics.test_samples }}</div>
+    <div style="font-size: 0.8rem; color: var(--text-muted);">40% Unseen Validation Instances</div>
+  </div>
+</div>
+
+<!-- Evaluation Metrics Table -->
+<div class="card glass">
+  <div class="card-header">
+    <h2 class="card-title">Regression Benchmark Metrics</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">Evaluated on Unseen Test Partition</span>
+  </div>
+  <div style="overflow-x: auto;">
+    <table class="neighbor-table">
+      <thead>
+        <tr>
+          <th>Target Variable</th>
+          <th>Mean Absolute Error (MAE)</th>
+          <th>Mean Squared Error (MSE)</th>
+          <th>Root Mean Squared Error (RMSE)</th>
+          <th>Coefficient of Determination (R²)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for target, t_metrics in metrics.targets.items() %}
+        <tr>
+          <td><strong style="color: var(--text-heading); font-size: 1rem;">{{ target }}</strong></td>
+          <td>{{ "%.2f"|format(t_metrics.MAE) }} {% if target == 'Calories' %}kcal{% else %}g{% endif %}</td>
+          <td>{{ "%.2f"|format(t_metrics.MSE) }}</td>
+          <td><strong>{{ "%.2f"|format(t_metrics.RMSE) }}</strong></td>
+          <td>
+            <span class="similarity-pill" style="background: rgba(99, 102, 241, 0.2); color: #818cf8;">
+              {{ "%.4f"|format(t_metrics.R2) }} ({{ "%.1f"|format(t_metrics.R2 * 100) }}%)
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Visual Performance Diagnostics -->
+<div class="card glass">
+  <div class="card-header">
+    <h2 class="card-title">Diagnostic Visualizations</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">Residual Distributions & Error Spread</span>
+  </div>
+  
+  <div class="charts-grid" style="margin-bottom: 1.5rem;">
+    <div style="background: var(--bg-surface-elevated); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+      <h3 style="font-size: 1rem; color: var(--text-heading); margin-bottom: 0.75rem;">Ground Truth vs Model Predictions</h3>
+      <img src="{{ url_for('static', filename='images/evaluation_scatter.png') }}" 
+           alt="Scatter Plot Actual vs Predicted" 
+           style="width: 100%; max-height: 420px; object-fit: contain; border-radius: var(--radius-sm);"
+           onerror="this.src='{{ url_for('static', filename='evaluation_scatter.png') }}'">
+    </div>
+    
+    <div style="background: var(--bg-surface-elevated); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+      <h3 style="font-size: 1rem; color: var(--text-heading); margin-bottom: 0.75rem;">Residual / Error Distribution</h3>
+      <img src="{{ url_for('static', filename='images/error_distribution.png') }}" 
+           alt="Residual Distribution" 
+           style="width: 100%; max-height: 420px; object-fit: contain; border-radius: var(--radius-sm);"
+           onerror="this.src='{{ url_for('static', filename='error_distribution.png') }}'">
+    </div>
+  </div>
+
+  <div style="background: var(--bg-surface-elevated); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+    <h3 style="font-size: 1rem; color: var(--text-heading); margin-bottom: 0.75rem;">MAE vs RMSE Error Metrics Comparison</h3>
+    <img src="{{ url_for('static', filename='images/metrics_comparison.png') }}" 
+         alt="Metrics Comparison" 
+         style="max-width: 750px; width: 100%; border-radius: var(--radius-sm);"
+         onerror="this.src='{{ url_for('static', filename='metrics_comparison.png') }}'">
+  </div>
+</div>
+{% endblock %}

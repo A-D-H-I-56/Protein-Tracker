@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}400 - Invalid Request | NutriAI{% endblock %}
+{% block content %}
+<div class="card glass" style="text-align: center; padding: 4rem 2rem;">
+  <div style="font-size: 4rem; margin-bottom: 1rem;">🚫</div>
+  <h1 style="font-size: 2.2rem; color: var(--text-heading); margin-bottom: 0.75rem;">Bad Request (400)</h1>
+  <p style="color: var(--text-muted); max-width: 450px; margin: 0 auto 2rem;">
+    {{ error if error else 'The request could not be processed due to invalid parameters or formatting.' }}
+  </p>
+  <a href="{{ url_for('web.index') }}" class="btn btn-primary" style="max-width: 250px; margin: 0 auto;">
+    &larr; Return to Calculator
+  </a>
+</div>
+{% endblock %}

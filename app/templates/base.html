@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AI Nutrition & Protein Tracker | Production ML{% endblock %}</title>
+  <meta name="description" content="Production-grade AI Fitness Nutrition & Protein Calculator powered by k-Nearest Neighbors machine learning.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <a href="{{ url_for('web.index') }}" class="nav-brand">
+      <span>⚡ NutriAI</span>
+      <span class="brand-badge">ML Core v1.0</span>
+    </a>
+    
+    <ul class="nav-links">
+      <li><a href="{{ url_for('web.index') }}" class="nav-link">Calculator</a></li>
+      <li><a href="{{ url_for('web.metrics') }}" class="nav-link">Model Performance</a></li>
+      <li><a href="{{ url_for('web.api_docs') }}" class="nav-link">API Docs</a></li>
+      <li>
+        <button id="themeToggle" class="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          ☀️
+        </button>
+      </li>
+    </ul>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div style="margin-bottom: 0.5rem;">
+      <strong>NutriAI Engine</strong> &bull; Production Machine Learning Architecture &bull; MVC & SOLID Principles
+    </div>
+    <div style="font-size: 0.8rem; opacity: 0.7;">
+      Trained on 200 Biometric Profiles &bull; Multi-Output k-NN Regressor &bull; Fast REST API
+    </div>
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

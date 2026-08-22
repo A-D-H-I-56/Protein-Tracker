@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}Tailored AI Nutrition Plan | NutriAI{% endblock %}
+
+{% block content %}
+{% if error %}
+<div class="card glass">
+  <div class="alert-error">
+    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Calculation Error</h3>
+    <p>{{ error }}</p>
+  </div>
+  <a href="{{ url_for('web.index') }}" class="btn btn-secondary">&larr; Return to Calculator</a>
+</div>
+{% else %}
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <span class="results-header-badge">✨ Multi-Output k-NN Recommendation Generated</span>
+    <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--text-heading);">Personalized Nutrition Blueprint</h1>
+  </div>
+  <div style="display: flex; gap: 0.75rem;">
+    <button onclick="window.print()" class="btn btn-secondary" style="padding: 0.6rem 1.1rem; font-size: 0.9rem;">
+      🖨️ Export / Print Plan
+    </button>
+    <a href="{{ url_for('web.index') }}" class="btn btn-secondary" style="padding: 0.6rem 1.1rem; font-size: 0.9rem;">
+      &larr; New Calculation
+    </a>
+  </div>
+</div>
+
+<!-- Profile Overview Card -->
+<div class="card glass">
+  <div class="card-header">
+    <h2 class="card-title">User Biometric Baseline</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">Mifflin-St Jeor + WHO Categorization</span>
+  </div>
+  <div class="form-grid" style="grid-template-columns: repeat(6, 1fr); gap: 1rem;">
+    <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+      <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Age & Sex</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-top: 0.2rem;">{{ profile.age }}y / {{ profile.gender }}</div>
+    </div>
+    <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+      <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Weight & Height</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-top: 0.2rem;">{{ profile.weight }}kg / {{ profile.height }}cm</div>
+    </div>
+    <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+      <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Body Mass Index</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 0.2rem;">{{ profile.bmi }} <span style="font-size: 0.75rem; font-weight: 500; opacity: 0.8;">({{ profile.bmi_category }})</span></div>
+    </div>
+    <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+      <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Basal Metabolic (BMR)</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-top: 0.2rem;">{{ profile.bmr | int }} kcal</div>
+    </div>
+    <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+      <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Maintenance TDEE</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--secondary); margin-top: 0.2rem;">{{ profile.tdee_baseline | int }} kcal</div>
+    </div>
+    <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+      <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Goal Protocol</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--warning); margin-top: 0.2rem;">{{ profile.goal }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4 Core Macro Cards -->
+<div class="macro-cards-grid">
+  <!-- Calories -->
+  <div class="macro-card calories glass">
+    <div class="macro-label">Daily Target Calories</div>
+    <div class="macro-value">{{ plan.calories }} <span style="font-size: 1rem; font-weight: 600; color: var(--text-muted);">kcal</span></div>
+    <div class="macro-ratio-badge" style="color: #f59e0b;">
+      {% if plan.calorie_delta and plan.calorie_delta > 0 %}
+        +{{ plan.calorie_delta }} kcal (Surplus)
+      {% elif plan.calorie_delta and plan.calorie_delta < 0 %}
+        {{ plan.calorie_delta }} kcal (Deficit)
+      {% else %}
+        Maintenance Energy
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Protein -->
+  <div class="macro-card protein glass">
+    <div class="macro-label">Protein Target</div>
+    <div class="macro-value">{{ plan.protein }} <span style="font-size: 1rem; font-weight: 600; color: var(--text-muted);">g</span></div>
+    <div class="macro-ratio-badge" style="color: #6366f1;">
+      {{ plan.protein_ratio }}% of calories ({{ plan.protein_per_kg }} g/kg)
+    </div>
+  </div>
+
+  <!-- Carbs -->
+  <div class="macro-card carbs glass">
+    <div class="macro-label">Carbohydrates</div>
+    <div class="macro-value">{{ plan.carbs }} <span style="font-size: 1rem; font-weight: 600; color: var(--text-muted);">g</span></div>
+    <div class="macro-ratio-badge" style="color: #06b6d4;">
+      {{ plan.carbs_ratio }}% of calories
+    </div>
+  </div>
+
+  <!-- Fat -->
+  <div class="macro-card fat glass">
+    <div class="macro-label">Dietary Fat</div>
+    <div class="macro-value">{{ plan.fat }} <span style="font-size: 1rem; font-weight: 600; color: var(--text-muted);">g</span></div>
+    <div class="macro-ratio-badge" style="color: #ec4899;">
+      {{ plan.fat_ratio }}% of calories
+    </div>
+  </div>
+</div>
+
+<!-- Interactive Charts Grid -->
+<div class="charts-grid">
+  <div class="chart-card glass">
+    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin-bottom: 1rem;">Macronutrient Energy Contribution</h3>
+    <div style="position: relative; height: 250px;">
+      <canvas id="macroDoughnutChart"></canvas>
+    </div>
+  </div>
+  <div class="chart-card glass">
+    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin-bottom: 1rem;">Energy Expenditure & AI Caloric Target</h3>
+    <div style="position: relative; height: 250px;">
+      <canvas id="energyComparisonChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Actionable 4-Meal Plan Breakdown -->
+<div class="card glass">
+  <div class="card-header">
+    <h2 class="card-title">Structured Daily Meal Schedule</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">Smart Nutrient Timing & Macro Distribution</span>
+  </div>
+  <div class="meal-timeline">
+    {% for meal in plan.meals %}
+    <div class="meal-box">
+      <div class="meal-name">{{ meal.name }}</div>
+      <div class="meal-pct">{{ meal.percentage }}% Daily Allocation</div>
+      <div class="meal-macros">
+        <strong>{{ meal.calories }} kcal</strong> &bull; 
+        P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g
+      </div>
+      <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Optimal Foods:</div>
+      <ul class="meal-suggestions">
+        {% for item in meal.suggestions %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Explainable AI (XAI) / Nearest Neighbor Profiles -->
+{% if plan.similar_profiles %}
+<div class="card glass">
+  <div class="card-header">
+    <h2 class="card-title">Explainable AI (XAI) &bull; Nearest Verified Dataset Matches</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">k-NN Distance Metric Matching</span>
+  </div>
+  <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+    The k-NN regressor determined your optimal macros by identifying the closest matching real-world athletes and fitness participants from the ground-truth dataset:
+  </p>
+  <div style="overflow-x: auto;">
+    <table class="neighbor-table">
+      <thead>
+        <tr>
+          <th>Similarity</th>
+          <th>Profile</th>
+          <th>Activity & Goal</th>
+          <th>Verified Calories</th>
+          <th>Verified Protein</th>
+          <th>Verified Carbs</th>
+          <th>Verified Fat</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for match in plan.similar_profiles %}
+        <tr>
+          <td><span class="similarity-pill">{{ match.similarity_score }}% Match</span></td>
+          <td>{{ match.age }}y {{ match.gender }} ({{ match.weight }}kg / {{ match.height }}cm)</td>
+          <td>{{ match.activity_level }} &bull; {{ match.goal }}</td>
+          <td><strong>{{ match.calories }} kcal</strong></td>
+          <td>{{ match.protein }}g</td>
+          <td>{{ match.carbs }}g</td>
+          <td>{{ match.fat }}g</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    {% if plan %}
+    const planData = {
+      calories: {{ plan.calories }},
+      protein: {{ plan.protein }},
+      carbs: {{ plan.carbs }},
+      fat: {{ plan.fat }},
+      protein_calories: {{ plan.protein_calories }},
+      carbs_calories: {{ plan.carbs_calories }},
+      fat_calories: {{ plan.fat_calories }},
+      bmr: {{ profile.bmr | int }},
+      tdee_baseline: {{ profile.tdee_baseline | int }}
+    };
+    initResultCharts(planData);
+    {% endif %}
+  });
+</script>
+{% endblock %}

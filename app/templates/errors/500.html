@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}500 - Server Error | NutriAI{% endblock %}
+{% block content %}
+<div class="card glass" style="text-align: center; padding: 4rem 2rem;">
+  <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+  <h1 style="font-size: 2.2rem; color: var(--text-heading); margin-bottom: 0.75rem;">Internal Server Error (500)</h1>
+  <p style="color: var(--text-muted); max-width: 450px; margin: 0 auto 2rem;">
+    Our AI computing engine encountered an unexpected error. Our systems have logged this event for diagnostics.
+  </p>
+  <a href="{{ url_for('web.index') }}" class="btn btn-primary" style="max-width: 250px; margin: 0 auto;">
+    &larr; Return to Home
+  </a>
+</div>
+{% endblock %}

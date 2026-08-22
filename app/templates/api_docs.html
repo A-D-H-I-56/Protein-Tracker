@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}REST API Documentation | NutriAI{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1 class="hero-title">Developer REST API</h1>
+  <p class="hero-subtitle">
+    Programmatic integration for fitness apps, client portals, and nutrition systems with JSON endpoints.
+  </p>
+</div>
+
+<!-- API Endpoints Overview -->
+<div class="card glass">
+  <div class="card-header">
+    <h2 class="card-title">API Endpoints Specification (v1)</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">Base URL: <code>/api/v1</code></span>
+  </div>
+
+  <!-- Endpoint 1: Health -->
+  <div style="margin-bottom: 2rem; padding: 1.25rem; background: var(--bg-surface-elevated); border-radius: var(--radius-md); border-left: 4px solid var(--success);">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <span style="background: var(--success); color: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">GET</span>
+      <code style="font-size: 1.1rem; color: var(--text-heading);">/api/v1/health</code>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+      Health check verifying service uptime and ML model artifact readiness.
+    </p>
+    <pre style="background: #0f172a; padding: 0.85rem; border-radius: 6px; color: #38bdf8; font-size: 0.85rem; overflow-x: auto;">
+curl -X GET http://localhost:5000/api/v1/health</pre>
+  </div>
+
+  <!-- Endpoint 2: Predict -->
+  <div style="margin-bottom: 2rem; padding: 1.25rem; background: var(--bg-surface-elevated); border-radius: var(--radius-md); border-left: 4px solid var(--primary);">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <span style="background: var(--primary); color: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">POST</span>
+      <code style="font-size: 1.1rem; color: var(--text-heading);">/api/v1/predict</code>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+      Generates complete personalized nutrition recommendation, BMR/TDEE baselines, and structured 4-meal plan.
+    </p>
+    
+    <div style="margin-bottom: 0.75rem;">
+      <strong style="font-size: 0.85rem; color: var(--text-heading);">Request Payload (JSON):</strong>
+      <pre style="background: #0f172a; padding: 0.85rem; border-radius: 6px; color: #a5b4fc; font-size: 0.85rem; overflow-x: auto;">
+{
+  "age": 25,
+  "gender": "Male",
+  "weight": 70.0,
+  "height": 175.0,
+  "activity_level": "Very Active",
+  "goal": "Muscle Gain"
+}</pre>
+    </div>
+
+    <div>
+      <strong style="font-size: 0.85rem; color: var(--text-heading);">Example cURL:</strong>
+      <pre style="background: #0f172a; padding: 0.85rem; border-radius: 6px; color: #38bdf8; font-size: 0.85rem; overflow-x: auto;">
+curl -X POST http://localhost:5000/api/v1/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age": 25, "gender": "Male", "weight": 70, "height": 175, "activity_level": "Very Active", "goal": "Muscle Gain"}'</pre>
+    </div>
+  </div>
+
+  <!-- Endpoint 3: Metrics -->
+  <div style="margin-bottom: 2rem; padding: 1.25rem; background: var(--bg-surface-elevated); border-radius: var(--radius-md); border-left: 4px solid var(--secondary);">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <span style="background: var(--secondary); color: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">GET</span>
+      <code style="font-size: 1.1rem; color: var(--text-heading);">/api/v1/metrics</code>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+      Retrieves quantitative validation metrics (MAE, MSE, RMSE, R²) for all regression targets.
+    </p>
+    <pre style="background: #0f172a; padding: 0.85rem; border-radius: 6px; color: #38bdf8; font-size: 0.85rem; overflow-x: auto;">
+curl -X GET http://localhost:5000/api/v1/metrics</pre>
+  </div>
+
+  <!-- Endpoint 4: Explain -->
+  <div style="padding: 1.25rem; background: var(--bg-surface-elevated); border-radius: var(--radius-md); border-left: 4px solid var(--warning);">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <span style="background: var(--warning); color: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">POST</span>
+      <code style="font-size: 1.1rem; color: var(--text-heading);">/api/v1/explain?k=3</code>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+      Returns top-K closest matching verified profiles with Euclidean distance similarity scores.
+    </p>
+  </div>
+</div>
+{% endblock %}
