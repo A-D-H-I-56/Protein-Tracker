@@ -1,0 +1,25 @@
+# Git & IDEs
+.git/
+.gitignore
+.github/
+.vscode/
+.idea/
+
+# Python virtual environment & caches
+.venv/
+venv/
+ENV/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local env files
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
