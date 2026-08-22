@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>{% block title %}AI Nutrition & Protein Tracker | Production ML{% endblock %}</title>
   <meta name="description" content="Production-grade AI Fitness Nutrition & Protein Calculator powered by k-Nearest Neighbors machine learning.">
   
@@ -21,21 +21,34 @@
 <body>
   <!-- Navigation Bar -->
   <header class="navbar glass">
-    <a href="{{ url_for('web.index') }}" class="nav-brand">
-      <span>⚡ NutriAI</span>
-      <span class="brand-badge">ML Core v1.0</span>
-    </a>
-    
-    <ul class="nav-links">
-      <li><a href="{{ url_for('web.index') }}" class="nav-link">Calculator</a></li>
-      <li><a href="{{ url_for('web.metrics') }}" class="nav-link">Model Performance</a></li>
-      <li><a href="{{ url_for('web.api_docs') }}" class="nav-link">API Docs</a></li>
-      <li>
+    <div class="nav-container">
+      <a href="{{ url_for('web.index') }}" class="nav-brand">
+        <span>⚡ NutriAI</span>
+        <span class="brand-badge">ML Core v1.0</span>
+      </a>
+
+      <!-- Right controls (Theme Toggle + Hamburger Menu Button) -->
+      <div class="nav-actions">
         <button id="themeToggle" class="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
           ☀️
         </button>
-      </li>
-    </ul>
+
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+
+      <!-- Navigation Links (Desktop & Collapsible Mobile Menu) -->
+      <nav id="navMenu" class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('web.index') }}" class="nav-link {% if request.endpoint == 'web.index' %}active{% endif %}">Calculator</a></li>
+          <li><a href="{{ url_for('web.metrics') }}" class="nav-link {% if request.endpoint == 'web.metrics' %}active{% endif %}">Model Performance</a></li>
+          <li><a href="{{ url_for('web.api_docs') }}" class="nav-link {% if request.endpoint == 'web.api_docs' %}active{% endif %}">API Docs</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <!-- Main Container -->
